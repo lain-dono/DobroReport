@@ -2,7 +2,7 @@
 // @name DobroReport
 // @description Скрипт добавляет кнопку "Сообщить Модераторам"
 // @namespace dobro
-// @version 0.1
+// @version 0.2
 // @author lain-dono
 // @license public domain
 // @include https://dobrochan.ru/*
@@ -15,7 +15,7 @@
 
 function main() {
 	// Модераторам-тред
-	var mod_thread = 43956;
+	var mod_thread = 47873;
 	// Раздел
 	var board = window.location.pathname.split("/")[1];
 
