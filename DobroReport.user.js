@@ -2,7 +2,7 @@
 // @name DobroReport
 // @description Скрипт добавляет кнопку "Сообщить Модераторам"
 // @namespace dobro
-// @version 0.2
+// @version 0.3
 // @author lain-dono
 // @license public domain
 // @include https://dobrochan.ru/*
@@ -16,6 +16,11 @@
 function main() {
 	// Модераторам-тред
 	var mod_thread = 47873;
+
+	// Загрузка номера треда из localStorage
+	if (localStorage.dobroReportModThread)
+		mod_thread = localStorage.dobroReportModThread;
+
 	// Раздел
 	var board = window.location.pathname.split("/")[1];
 
@@ -58,6 +63,25 @@ function main() {
 		return false;
 	});
 	$(".userdelete tbody tr td").append(button);
+
+	// Если находимся в настройках
+	if (location.pathname == '/settings') {
+		var setModThreadButton = $("<button>Обновить номер модераторам-треда ("+ mod_thread +")</button>");
+		setModThreadButton.click(function () {
+			$.getJSON('/d/0.json', function (json) {
+				threads = json.boards.d.threads;
+				for (var i = 0; i < threads.length; i++) {
+					if (threads[i].title == "Модераторам-тред") {
+						localStorage.dobroReportModThread = threads[i].display_id;
+						alert('Модераторам-тред успешно обновлён: ' + localStorage.dobroReportModThread);
+						return;
+					}
+				}
+				alert('Не удалось найти Модераторам-тред на нулевой');
+			});
+		});
+		$('form:last').after(setModThreadButton);
+	}
 };
 
 // Добавляем скрипт на страницу
