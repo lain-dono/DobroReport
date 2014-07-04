@@ -2,7 +2,7 @@
 // @name DobroReport
 // @description Скрипт добавляет кнопку "Сообщить Модераторам"
 // @namespace dobro
-// @version 0.3
+// @version 0.4
 // @author lain-dono
 // @license public domain
 // @include https://dobrochan.ru/*
@@ -71,7 +71,7 @@ function main() {
 			$.getJSON('/d/0.json', function (json) {
 				threads = json.boards.d.threads;
 				for (var i = 0; i < threads.length; i++) {
-					if (threads[i].title == "Модераторам-тред") {
+					if (threads[i].title.search("Модераторам") != -1) {
 						localStorage.dobroReportModThread = threads[i].display_id;
 						alert('Модераторам-тред успешно обновлён: ' + localStorage.dobroReportModThread);
 						return;
